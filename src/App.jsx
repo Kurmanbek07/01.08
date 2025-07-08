@@ -5,6 +5,8 @@ import Hero from './components/Layout/Hero/Hero'
 import Callfor from './components/Layout/Callfor/Callfor'
 import Place from './components/Layout/Place/Place'
 import Start from './components/Layout/Start/Start'
+import React from 'react';
+
 
 function App() {
 

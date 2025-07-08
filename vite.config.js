@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: '/01.08/',
-  // ...другие настройки
+  base: './', // относительные пути, чтобы файлы правильно грузились из корня
+  plugins: [react()],
 })
 
 
