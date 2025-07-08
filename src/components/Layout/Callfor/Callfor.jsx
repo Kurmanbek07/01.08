@@ -1,8 +1,31 @@
-import React from "react";
+import { CiHeart } from "react-icons/ci";
+import React, { useEffect } from "react";
 import "./Callfor.scss";
 import august from "../../../assets/image/aa.png";
 
 const Callfor = () => {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+      }
+    );
+
+    const elements = document.querySelectorAll(
+      "#callfor p, #callfor h1, #callfor img"
+    );
+    elements.forEach((el) => observer.observe(el));
+
+    return () => elements.forEach((el) => observer.unobserve(el));
+  }, []);
+
   return (
     <div id="callfor">
       <div className="container">
@@ -10,15 +33,17 @@ const Callfor = () => {
           <div className="callfor--box">
             <div className="callfor--box__text">
               <p>
-                Жашоодо кубанычтуу жана бактылуу <br /> көз ирмемдер болот, аны
-                жакындарыңыз <br /> менен бөлүшкүңүз келет... <br /> Жакын жерде
-                биздин жакындарыбыздын катышуусусуз элестетүү <br /> мүмкүн
-                болбогон өзгөчө жана унутулгус окуялар бар... <br /> Жашообуздун
-                эң бактылуу күнүнүн кубанычын <br />
-                биз менен бөлүшүүгө чакырабыз! <br />
+                Үйлөнүү үлпөт тоюна арналган, <br /> салтанаттуу кечебизге
+                келип, <br /> ак батаныздарды берип, кадырлуу <br /> коногубуз
+                болуп кетүүгө чакырабыз.
               </p>
               <h1>Биз сиздерди күтөбүз!</h1>
-              <img src={august} alt="" />
+              <div className="callfor--box__text--imganima">
+                <i >
+                <CiHeart className="icon" />
+              </i>
+              <img src={august} alt="Август месяц" />
+              </div>
             </div>
           </div>
         </div>

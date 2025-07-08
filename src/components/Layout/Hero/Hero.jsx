@@ -1,20 +1,47 @@
-import React from 'react';
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"></link>
-import "./Hero.scss"
+
+import React, { useEffect, useRef, useState } from "react";
+import "./Hero.scss";
+
 const Hero = () => {
-    return (
-        <div id='hero'>
-            <div className="container">
-                <div className="hero">
-                    <h1>Чакыруу</h1>
-                    <div className="hero--container">
-                        <h1>Нурислам & Нурайым</h1>
-                        <h2>01.08.2025</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
+  const heroRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect(); // отключаем, чтобы анимация сработала один раз
+        }
+      },
+      { threshold: 0.1 }
     );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => {
+      if (heroRef.current) observer.unobserve(heroRef.current);
+    };
+  }, []);
+
+  return (
+    <div id="hero" ref={heroRef}>
+      <div className="container">
+        <div className="hero">
+          <h1 className={visible ? "fadeInUp delay-0" : ""}>Урматтуу!</h1>
+
+          <div className={`hero--container ${visible ? "fadeInUp delay-1" : ""}`}>
+            <h2 className={visible ? "fadeInUp delay-2" : ""}>Биздин сыйлуу конокторубуз</h2>
+            <h3 className={visible ? "fadeInUp delay-3" : ""}>Сиздерди балдарыбыз</h3>
+            <h1 className={visible ? "fadeInUp delay-4" : ""}>Нурислам & Нурайым</h1>
+            <h4 className={visible ? "fadeInUp delay-5" : ""}>01.08.2025</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Hero;

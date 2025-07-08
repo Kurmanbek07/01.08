@@ -1,11 +1,35 @@
-import React from "react";
+
+import React, { useEffect, useRef, useState } from "react";
 import "./Start.scss";
 import { PiMapPinArea } from "react-icons/pi";
-
 import { BiDish } from "react-icons/bi";
+
 const Start = () => {
+  const startRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (startRef.current) {
+      observer.observe(startRef.current);
+    }
+
+    return () => {
+      if (startRef.current) observer.unobserve(startRef.current);
+    };
+  }, []);
+
   return (
-    <div id="start">
+    <div id="start" ref={startRef} className={visible ? "fadeInUp" : ""}>
       <div className="container">
         <div className="start">
           <h1>Күндүн планы</h1>
@@ -16,10 +40,10 @@ const Start = () => {
               </a>
               <div className="start--width__flex--text">
                 <h1>18:00</h1>
-                <h2>конокторду чогултуу</h2>
+                <h2>Конокторду чакыруу</h2>
                 <p>
-                  Иш-чарага бара жатканыңызда <br /> жагымдуу жылмаюуңузду жана
-                  <br /> жакшы маанайыңызды ала келиңиз.
+                  Той салтанатка  жагымдуу жылмаюуңузду <br /> жана
+                   жакшы маанайыңызды ала келиңиз.
                 </p>
               </div>
             </div>
@@ -27,9 +51,8 @@ const Start = () => {
               <a href="">
                 <BiDish />
               </a>
-
               <div className="start--width__flex--text">
-                <h1>20:00</h1>
+                <h1>19:00</h1>
                 <p>
                   Даамдуу тамак-аш, бий <br /> жана кызыктуу убакыт.
                 </p>
